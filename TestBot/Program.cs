@@ -13,11 +13,6 @@ namespace TestBot
 {
     class Program
     {
-        //static void Main(string[] args)
-        //{
-        //    Console.WriteLine("Hello World!");
-        //}
-        //MyBot bot = new MyBot();
         private CommandService _commands;
         private DiscordSocketClient _client;
 
@@ -43,6 +38,7 @@ namespace TestBot
                     MessageCacheSize = 1000
                 });
 
+            // Configure services
             services = new ServiceCollection()
                 .AddSingleton(_client)
                 .AddSingleton(_commands)
@@ -56,10 +52,6 @@ namespace TestBot
             await provider.GetRequiredService<StartupService>().StartAsync();
             provider.GetRequiredService<CommandHandler>();
 
-            // await _client.LoginAsync(TokenType.Bot,
-            //"");
-            //await _client.StartAsync();
-            //await commands.AddModulesAsync(Assembly.GetEntryAssembly());
             _client.Ready += () =>
             {
                 Console.WriteLine("Bot is connected! YAY");
