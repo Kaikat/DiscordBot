@@ -5,6 +5,29 @@ namespace TestBot.Modules
 {
     public class ResponseModule : ModuleBase<SocketCommandContext>
     {
+        [Command("aboutme")]
+        public async Task AboutMe()
+        {
+            string aboutMeMessage = "Hi! I'm <BotName>! \n" +
+                "I was created by Kaikat on Saturday, March 23, 2019.\n" +
+                "I am a work in progress so if you have any new feature requests or ideas, let her know.";
+            await ReplyAsync(aboutMeMessage);
+        }
+
+        [Command("help")]
+        public async Task Help()
+        {
+            string helpMessage = "I look at any commands that start with an !\n" +
+            	"Here are the current commands that I respond to:\n" +
+            	"\taboutme\n" +
+            	"\tcookie\n" +
+            	"\tcookie <username>\n" +
+            	"\thello\n" +
+            	"\thi\n";
+
+            await ReplyAsync(helpMessage);
+        }
+
         /// <summary>
         /// Gives a cookie to the current user.
         /// </summary>
@@ -37,6 +60,5 @@ namespace TestBot.Modules
         {
             await ReplyAsync($"Hi {Context.User.Mention}");
         }
-
     }
 }
