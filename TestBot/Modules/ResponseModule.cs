@@ -60,5 +60,11 @@ namespace TestBot.Modules
         {
             await ReplyAsync($"Hi {Context.User.Mention}");
         }
+
+        [Command("redact")]
+        public async Task Redact()
+        {
+            await ReplyAsync($"{Context.User.Mention} redacted or attempted to redact a comment!");
+        }
     }
 }

@@ -8,6 +8,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using TestBot.Services;
+using TestBot.Services.YouTube;
 
 namespace TestBot
 {
@@ -48,7 +49,13 @@ namespace TestBot
                 .AddSingleton(_commands)
                 .AddSingleton<CommandHandler>()
                 .AddSingleton<LoggingService>()
-                .AddSingleton<StartupService>();
+                .AddSingleton<StartupService>()
+               //.AddSingleton<YouTubeDownloadService>()
+                .AddSingleton<SongService>()
+                .AddSingleton<AudioPlaybackService>()
+                ;
+
+            //services.GetService<SongService>().AudioPlaybackService = _services.GetService<AudioPlaybackService>();
 
             provider = new DefaultServiceProviderFactory().CreateServiceProvider(services);
 
