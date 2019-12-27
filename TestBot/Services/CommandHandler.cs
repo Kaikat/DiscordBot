@@ -55,12 +55,12 @@ namespace TestBot.Services
                     result = await _commands.ExecuteAsync(context, argPos, _provider);
                     if (!result.IsSuccess)
                     {
-                        EmbedBuilder embed;
-                        embed = new EmbedBuilder();
-                        embed.WithColor(Color.DarkRed);
-                        embed.AddField(":warning: An unexpected error occurred.", $"The command '{message.Content}' is not a registered command");
+                        //EmbedBuilder embed;
+                        //embed = new EmbedBuilder();
+                        //embed.WithColor(Color.DarkRed);
+                        //embed.AddField(":warning: An unexpected error occurred.", $"The command '{message.Content}' is not a registered command");
 
-                        await context.Channel.SendMessageAsync("", embed: embed.Build());
+                        //await context.Channel.SendMessageAsync("", embed: embed.Build());
                     }
                 }
             }
