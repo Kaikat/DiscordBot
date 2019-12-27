@@ -87,19 +87,6 @@ namespace TestBot.Modules
             {
                 hsData = client.DownloadString(rs_url);
                 ParseHSData(hsData);
-
-                /*
-                string[] lines = hsData.Split('\n');
-                //Boss stuff of interest starts at line 35
-                string msg = "";
-                int index = 35;
-                foreach (string boss in bossNames)
-                {
-                    //kill kph ehb
-                    string[] counts = lines[index].Split(',');
-                    msg += boss + ", kills= " + counts[0] + " kph= " + counts[1] + "\n";
-                    index++;
-                }*/
             }
             catch (WebException)
             {

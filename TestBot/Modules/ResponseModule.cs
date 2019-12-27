@@ -103,56 +103,7 @@ namespace TestBot.Modules
                 {
                     await ReplyAsync($"" + tableParts[i]);
                 }
-                /*foreach (string part in tableParts)
-                {
-                    await ReplyAsync(part);
-                }*/
             }
-            /*
-            WebClient client = new WebClient();
-            string rs_url = "http://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player=";
-            rs_url += playername;
-
-            string downloadedString = string.Empty;
-            try
-            {
-                downloadedString = client.DownloadString(rs_url);
-                string [] lines = downloadedString.Split('\n');
-                //Boss stuff of interest starts at line 35
-                List<string> bossNames = new List<string> 
-                {
-                    "Abyssal Sire", "Alchemical Hydra", "Barrows Chests", "Bryophyta",
-                    "Chambers of Xeric", "Chambers of Xeric Challenge Mode", 
-                    "Chaos Elemental", "Chaos Fanatic", "Commander Zilyana", 
-                    "Corporeal Beast", "Crazy Archaelogist", "Dagannoth Prime", 
-                    "Dagannoth Rex", "Dagannoth Supreme", "Deranged Archaelogist", 
-                    "General Graardor", "Giant Mole", "Grotesque Guardians", "Hespori", 
-                    "Kalphite Queen", "King Black Dragon", "Kraken", "Kree'Arra", 
-                    "K'ril Tsutsaroth", "Unknown 1", "Thermonuclear Smoke Devil",
-                    "Tzkal-zuk", "Unknown 2", "Skotizo", "Unknown 3", "Vet'ion", 
-                    "Theatre of Blood", "Unknown 4", "Unknown 5", "TzTok-Jad", 
-                    "Venenatis", "Unknown 6", "Vorkath", "Wintertodt", "Zalcano", 
-                    "Zulrah"
-                };
-                List<float> killsPerHour = new List<float>
-                {
-                    30, 27, 0, 0, 3.5f, 1.8f, 48, 100, 25, 14, 
-                };
-                string msg = "";
-                int index = 35;
-                foreach (string boss in bossNames)
-                {
-                    //kill kph ehb
-                    string [] counts = lines[index].Split(',');
-                    msg += boss + ", kills= " + counts[0] + " kph= " + counts[1] + "\n";
-                    index++;
-                }
-                await ReplyAsync($"Hello {playername}\nEHB In Progress\n" + msg);
-            }
-            catch (WebException e)
-            {
-                await ReplyAsync($"Could not find a player with the name '{playername}'\n");
-            }*/
         }
     }
 }
