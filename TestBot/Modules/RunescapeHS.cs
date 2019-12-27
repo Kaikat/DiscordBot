@@ -112,9 +112,6 @@ namespace TestBot.Modules
         private void ParseHSData(string hsData)
         {
             string[] dataLines = hsData.Split('\n');
-            //Boss stuff of interest starts at line 35
-            string msg = "";
-
             int dataIndex = 0;
             foreach(string skill in skills)
             {
@@ -246,6 +243,8 @@ namespace TestBot.Modules
 
         private string GetCentered(int length, string name)
         {
+            // length: the number of characters name should be centered on
+            // name: the string to center in the given length
             string padding = "";
             int nameLength = name.Length;
             float center = length / 2.0f - (nameLength / 2.0f);
