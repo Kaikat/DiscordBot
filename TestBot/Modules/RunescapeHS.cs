@@ -58,10 +58,10 @@ namespace TestBot.Modules
             "Dagannoth Rex", "Dagannoth Supreme", "Deranged Archaelogist",
             "General Graardor", "Giant Mole", "Grotesque Guardians", "Hespori",
             "Kalphite Queen", "King Black Dragon", "Kraken", "Kree'Arra",
-            "K'ril Tsutsaroth", "Unknown 1", "Thermonuclear Smoke Devil",
-            "Tzkal-zuk", "Unknown 2", "Skotizo", "Unknown 3", "Vet'ion",
-            "Theatre of Blood", "Unknown 4", "Unknown 5", "TzTok-Jad",
-            "Venenatis", "Unknown 6", "Vorkath", "Wintertodt", "Zalcano",
+            "K'ril Tsutsaroth", "Thermonuclear Smoke Devil", "Obor",
+            "Sarachnis", "Scorpia", "Skotizo", "The Gauntlet", "The Corrupted Gauntlet?",
+            "Theatre of Blood", "Thermonuclear Smoke Devil", "TzKal-Zuk", "TzTok-Jad",
+            "Venenatis", "Vet'ion", "Vorkath", "Wintertodt", "Zalcano",
             "Zulrah"
         };
 
@@ -158,9 +158,10 @@ namespace TestBot.Modules
             int numKillsLength = 9;    //must be odd
             int kphsLength = 5;        //must be odd
             int ehbLength = 9;         //must be odd
+            int numDividers = 5;       //number of |
 
             string horizBorder = "";
-            for(int i = 0; i < bossFieldLength + numKillsLength + kphsLength + ehbLength; i++)
+            for(int i = 0; i < bossFieldLength + numKillsLength + kphsLength + ehbLength + numDividers; i++)
             {
                 horizBorder += '-';
             }
@@ -200,7 +201,7 @@ namespace TestBot.Modules
                 }
                 table += killsPerHour[bossCounter] + " |";
 
-                // EHB, (+1 for the leading white space)
+                // Efficient Hours Bossed (EHB), (+1 for the leading white space)
                 float ehb = 0.0f;
                 float kills = float.Parse(killsPerHour[bossCounter], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 if (kills > 0.0f && entry.score > 0.0f)
@@ -208,12 +209,13 @@ namespace TestBot.Modules
                     ehb = entry.score / kills;
                 }
 
-                whiteSpace = ehbLength - (ehb.ToString().Length + 1);
+                string theEHB = ehb.ToString("n2");
+                whiteSpace = ehbLength - (theEHB.Length + 1);
                 for (int i = 0; i < whiteSpace; i++)
                 {
                     table += " ";
                 }
-                table += ehb.ToString() + " |";
+                table += theEHB + " |";
                 bossCounter++;
                 table += "\n";
             }
@@ -222,15 +224,15 @@ namespace TestBot.Modules
             if (table.Length > DISCORD_MAX_CHAR_LIMIT)
             {
                 string[] tableLines = table.Split('\n');
-                Console.Write(table);
                 int lineLength = tableLines[0].Length;
 
                 int limit = (DISCORD_MAX_CHAR_LIMIT / lineLength) - 1;
                 int linesAddedCounter = 0;
                 string tableLineEntry = "";
+
                 for (int i = 0; i < tableLines.Length; i++)
                 {
-                    if (linesAddedCounter == DISCORD_MAX_CHAR_LIMIT)
+                    if (linesAddedCounter == limit || i == tableLines.Length - 1)
                     {
                         linesAddedCounter = 0;
                         tableParts.Add("```" + tableLineEntry + "```");
@@ -240,13 +242,18 @@ namespace TestBot.Modules
                     tableLineEntry += tableLines[i] + "\n";
                     linesAddedCounter++;
                 }
-
             }
             else
             {
                 tableParts.Add("```" + table + "```");
             }
 
+            Console.WriteLine("TableParts: " + tableParts.Count.ToString());
+            for (int i = 0; i < tableParts.Count; i++)
+            {
+                Console.WriteLine("PART " + i.ToString());
+                Console.WriteLine(tableParts[i]);
+            }
             return tableParts;
         }
 
@@ -265,3 +272,43 @@ namespace TestBot.Modules
         }
     }
 }
+
+/*
+//player class - from Arrow
+public Discord.Embed GetBossEmbedded(string name)
+{
+    if (bossNames.Contains(name))
+    {
+        MiniData boss = bossData[name];
+        int index = bossNames.IndexOf(name);
+        var builder = new Discord.EmbedBuilder();
+        string kills = killsPerHour[index];
+        string ehb = float.Parse(kills) > 0.0f && boss.score > 0.0f ? (boss.score / float.Parse(kills)).ToString() : "0";
+        builder.WithTitle(name);
+        builder.ThumbnailUrl = "https://oldschool.runescape.wiki/images/thumb/9/9b/Zulrah_%28tanzanite%2C_Christmas%29.png/250px-Zulrah_%28tanzanite%2C_Christmas%29.png?e8bc2";
+        builder.AddField(GetField("Rank", boss.rank.ToString()));
+        builder.AddField(GetField("Kills", boss.score.ToString()));
+        builder.AddField(GetField("KPH", kills));
+        builder.AddField(GetField("EHB", ehb));
+
+        return builder.Build();
+    }
+    return null;
+}
+
+private Discord.EmbedFieldBuilder GetField(string name, string value)
+{
+    var field = new Discord.EmbedFieldBuilder();
+    field.Name = name;
+    field.Value = value;
+    field.IsInline = true;
+
+    return field;
+}
+//response
+var embed = player.GetBossEmbedded("Zulrah");
+await ReplyAsync(null, false, embed);
+
+    //await ReplyAsync(null   - message, false - text to speech?, embed  - embedslot );
+
+*/

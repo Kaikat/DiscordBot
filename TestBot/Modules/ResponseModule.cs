@@ -99,10 +99,14 @@ namespace TestBot.Modules
                 //builder.WithColor(Color.Red);
                 await ReplyAsync("", false, builder.Build());*/
 
-                foreach (string part in tableParts)
+                for(int i = 0; i < tableParts.Count; i++)
+                {
+                    await ReplyAsync($"" + tableParts[i]);
+                }
+                /*foreach (string part in tableParts)
                 {
                     await ReplyAsync(part);
-                }
+                }*/
             }
             /*
             WebClient client = new WebClient();
