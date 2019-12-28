@@ -101,7 +101,7 @@ namespace TestBot.Modules
 
                 for(int i = 0; i < tableParts.Count; i++)
                 {
-                    await ReplyAsync($"" + tableParts[i]);
+                    await ReplyAsync(tableParts[i]);
                 }
             }
         }

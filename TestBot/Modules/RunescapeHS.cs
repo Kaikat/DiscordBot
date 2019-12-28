@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace TestBot.Modules
 {
+    //https://secure.runescape.com/m=hiscore_oldschool/hiscorepersonal?user1=arrow
     public class SkillData
     {
         public float rank { get; private set; }
@@ -232,12 +233,6 @@ namespace TestBot.Modules
                 tableParts.Add("```" + table + "```");
             }
 
-            Console.WriteLine("TableParts: " + tableParts.Count.ToString());
-            for (int i = 0; i < tableParts.Count; i++)
-            {
-                Console.WriteLine("PART " + i.ToString());
-                Console.WriteLine(tableParts[i]);
-            }
             return tableParts;
         }
 
