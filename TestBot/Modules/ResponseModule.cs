@@ -71,11 +71,12 @@ namespace TestBot.Modules
         {
             await ReplyAsync($"Please provide the runescape player name to the Efficient Hours Bossed command.");
         }
+
         [Command("ehb")]
         public async Task PlayerInfo(string playername)
         {
             RunescapeHS player = new RunescapeHS(playername);
-            if (player.GetBossData().Count == 0)
+            if (player.GetBossDataTable().Count == 0)
             {
                 await ReplyAsync($"Could not find a player with the name '{playername}'\n");
             }

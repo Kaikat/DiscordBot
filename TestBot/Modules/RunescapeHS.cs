@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 
 namespace TestBot.Modules
@@ -15,8 +16,8 @@ namespace TestBot.Modules
         public SkillData(string rank, string level, string xp)
         {
             this.rank = float.Parse(rank,System.Globalization.CultureInfo.InvariantCulture);
-            this.level = float.Parse(level, System.Globalization.CultureInfo.InvariantCulture); ;
-            this.xp = float.Parse(xp, System.Globalization.CultureInfo.InvariantCulture); ;
+            this.level = float.Parse(level, System.Globalization.CultureInfo.InvariantCulture);
+            this.xp = float.Parse(xp, System.Globalization.CultureInfo.InvariantCulture);
         }
     }
 
@@ -28,29 +29,50 @@ namespace TestBot.Modules
 
         public MiniData(string rank, string score)
         {
-            this.rank = float.Parse(rank, System.Globalization.CultureInfo.InvariantCulture); ;
-            this.score = float.Parse(score, System.Globalization.CultureInfo.InvariantCulture); ;
+            this.rank = float.Parse(rank, System.Globalization.CultureInfo.InvariantCulture);
+            this.score = float.Parse(score, System.Globalization.CultureInfo.InvariantCulture);
+        }
+    }
+
+    public class BossData
+    {
+        public float rank { get; private set; }
+        public float score { get; private set; }
+        public float kph { get; private set; }
+        public float ehb { get; private set; }
+
+        public BossData(string rank, string score, string kph)
+        {
+            this.rank = float.Parse(rank, System.Globalization.CultureInfo.InvariantCulture);
+            this.score = float.Parse(score, System.Globalization.CultureInfo.InvariantCulture);
+            this.kph = float.Parse(kph, System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        public void CalculateEHB(string score)
+        {
+            this.score = float.Parse(score, System.Globalization.CultureInfo.InvariantCulture);
+            ehb = (this.score <= 0 || this.kph <= 0) ? 0.0f : this.score / this.kph;
         }
     }
 
 
     public class RunescapeHS
     {
-        public readonly List<string> skills = new List<string> {
+        /*public readonly List<string> skills = new List<string> {
             "Overall", "Attack", "Defence", "Strength", "Hitpoints", "Ranged",
             "Prayer", "Magic", "Cooking", "Woodcutting", "Fletching", "Fishing",
             "Firemaking", "Crafting", "Smithing", "Mining", "Herblore",
             "Agility", "Thieving", "Slayer", "Farming", "Runecraft", "Hunter",
             "Construction"
-        };
-        public readonly List<string> minigames = new List<string> {
+        };*/
+        /*public readonly List<string> minigames = new List<string> {
             "Unknown Minigame", "Bounty Hunter (Hunter)",
             "Bounty Hunter (Rogue)", "Clue Scrolls (all)", "UNKNOWN",
             "Clue Scrolls (easy)", "Clue Scrolls (medium)",
             "Clue Scrolls (hard)", "Clue Scrolls (elite)",
             "Clue Scrolls (master)", "LMS (rank)"
-        };
-        public readonly List<string> bossNames = new List<string>
+        };*/
+        /*public readonly List<string> bossNames = new List<string>
         {
             "Abyssal Sire", "Alchemical Hydra", "Barrows Chests", "Bryophyta",
             "Chambers of Xeric", "Chambers of Xeric CM",
@@ -64,19 +86,21 @@ namespace TestBot.Modules
             "Theatre of Blood", "Thermonuclear Smoke Devil", "TzKal-Zuk", "TzTok-Jad",
             "Venenatis", "Vet'ion", "Vorkath", "Wintertodt", "Zalcano",
             "Zulrah"
-        };
+        };*/
 
-        private Dictionary<string, SkillData> skillData = new Dictionary<string, SkillData>();
-        private Dictionary<string, MiniData> miniData = new Dictionary<string, MiniData>();
-        private Dictionary<string, MiniData> bossData = new Dictionary<string, MiniData>();
-        private int DISCORD_MAX_CHAR_LIMIT = 2000;
+        //private Dictionary<string, SkillData> skillData = new Dictionary<string, SkillData>();
+        //private Dictionary<string, MiniData> miniData = new Dictionary<string, MiniData>();
+        //private Dictionary<string, BossData> bossData = new Dictionary<string, BossData>();
+        //private int DISCORD_MAX_CHAR_LIMIT = 2000;
 
-        private readonly List<string> killsPerHour = new List<string>
+        /*private readonly List<string> killsPerHour = new List<string>
         {
             "0", "27", "0", "0", "3.5", "1.8", "48", "100", "25", "14", "0", "96", "96", "96", "0", "30", "90",
             "30", "0", "35", "100", "80", "28", "36", "45", "100", "10", "7.5", "0", "0", "0", "3", "110",
             "0.8", "2", "44", "30", "32", "0", "0", "35"
-        };
+        };*/
+
+        private string HSData;
 
         public RunescapeHS(string playerName)
         {
@@ -86,32 +110,96 @@ namespace TestBot.Modules
             string hsData = string.Empty;
             try
             {
-                hsData = client.DownloadString(rs_url);
-                ParseHSData(hsData);
+                HSData = client.DownloadString(rs_url);
+                //ParseBossData(hsData);
             }
             catch (WebException)
             {
-                hsData = string.Empty;
+                HSData = string.Empty;
             }
         }
 
-        public Dictionary<string, SkillData> GetSkillData()
+        /*public Dictionary<string, SkillData> GetSkillData()
         {
             return skillData;
-        }
+        }*/
 
-        public Dictionary<string, MiniData> GetBossData()
+        public Dictionary<string, BossData> GetBossData()
         {
+            string text = System.IO.File.ReadAllText(System.IO.Directory.GetCurrentDirectory() + "/Data/boss_data.json");
+            Dictionary<string, BossData> bossData = JsonConvert.DeserializeObject<Dictionary<string, BossData>>(text);
+
+            /*foreach(string boss in bossData.Keys)
+            {
+                Console.WriteLine(boss);
+                Console.WriteLine("\t" + bossData[boss].rank);
+                Console.WriteLine("\t" + bossData[boss].score);
+                Console.WriteLine("\t" + bossData[boss].kph);
+                Console.WriteLine("\t" + bossData[boss].ehb);
+            }*/
+
             return bossData;
         }
 
-        public Dictionary<string, MiniData> GetMiniGameData()
+        public List<string> GetBossTable()
+        {
+            List<string> table = new List<string>();
+            return table;
+        }
+        /*public Dictionary<string, MiniData> GetMiniGameData()
         {
             return miniData;
-        }
+        }*/
+        public List<string> GetBossDataTable()
+        {
+            Dictionary<string, BossData> bossData = GetBossData();
+            string[] dataLines = HSData.Split('\n');
+            int bossIndex = 36;
+            int bossCount = 0;
 
+            List<List<string>> tableContents = new List<List<string>>();
+            foreach (string boss in bossData.Keys)
+            {
+                string[] data = dataLines[bossIndex].Split(',');
+                bossData[boss].CalculateEHB(data[1]);
+                bossIndex++;
+
+                List<string> bossContents = new List<string>
+                {
+                    boss,
+                    bossData[boss].score.ToString(),
+                    bossData[boss].kph.ToString(),
+                    bossData[boss].ehb.ToString("n2")
+                };
+                tableContents.Add(bossContents);
+
+                Console.WriteLine(boss);
+                Console.WriteLine("\t" + bossData[boss].rank);
+                Console.WriteLine("\t" + bossData[boss].score);
+                Console.WriteLine("\t" + bossData[boss].kph);
+                Console.WriteLine("\t" + bossData[boss].ehb);
+                bossCount++;
+            }
+
+            string[] columnNames = { "Boss", "Kills", "KPH", "EHB"};
+            int[] columnWidths = { 28, 9, 5, 9 };
+
+            Console.WriteLine("!!!!!!!!!!!!!!!!!!");
+
+            DiscordTable table = new DiscordTable(
+                columnNames, columnWidths, bossCount, tableContents
+            );
+            Console.WriteLine("~~~~~~~~~~");
+            Console.WriteLine("DISCORD TABLE\n" + table.Table);
+
+            List<string> splitTable = DiscordMessage.SplitTable(table.Table);
+            return DiscordMessage.ToCodeBlock(splitTable);
+        }
+        /*
         private void ParseHSData(string hsData)
         {
+            GetBossData();
+
             string[] dataLines = hsData.Split('\n');
             int dataIndex = 0;
             foreach(string skill in skills)
@@ -134,9 +222,15 @@ namespace TestBot.Modules
                 bossData[boss] = new MiniData(data[0], data[1]);
                 dataIndex++;
             }
-        }
+        }*/
 
-        public List<string> GetBossDataTable()
+        /*public List<string> GetBossDataTable()
+        {
+            List<string> l = new List<string>();
+            return l;
+        }*/
+
+        /*public List<string> GetBossDataTable2()
         {
             string table = "";
             int bossFieldLength = 28;  //must be even
@@ -156,7 +250,7 @@ namespace TestBot.Modules
             table += GetCentered(kphsLength, "KPH");
             table += GetCentered(ehbLength, "EHB") + "\n";
             table += horizBorder + "\n";
-
+            
             int bossCounter = 0;
             foreach (string boss in bossNames)
             {
@@ -234,7 +328,7 @@ namespace TestBot.Modules
             }
 
             return tableParts;
-        }
+        }*/
 
         private string GetCentered(int length, string name)
         {
