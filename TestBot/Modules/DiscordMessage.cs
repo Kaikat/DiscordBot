@@ -24,7 +24,6 @@ namespace TestBot.Modules
 
         public static List<string> SplitTable(string table)
         {
-            // TODO:
             if(table.Length <= DISCORD_MAX_CHAR_LIMIT)
             {
                 return new List<string> { table };
@@ -53,11 +52,6 @@ namespace TestBot.Modules
                 linesAdded++;
             }
 
-            Console.WriteLine("=========");
-            foreach(string msg in splitMessage)
-            {
-                Console.WriteLine(msg);
-            }
             return splitMessage;
         }
     }
