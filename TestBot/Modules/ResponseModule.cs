@@ -105,5 +105,31 @@ namespace RavenBot.Modules
                 }
             }
         }
+
+
+        [Command("mm")]
+        [Summary("Moves all users in current voice channel to given voice channel id.")]
+        [RequireUserPermission(Discord.GuildPermission.MoveMembers)]
+        public async Task MassMoveVoiceUsers(ulong channel)
+        {
+            SocketVoiceChannel newChannel = Context.Guild.GetVoiceChannel(channel);
+            if (newChannel == null)
+            {
+                await ReplyAsync("This channel does not exist here!");
+                return;
+            }
+
+            SocketVoiceChannel currentChannel = Context.Guild.VoiceChannels.FirstOrDefault(voice => voice.GetUser(Context.User.Id) == Context.User);
+            if (currentChannel == null)
+            {
+                await ReplyAsync("Make sure you are in a voice channel first!");
+                return;
+            }
+
+            foreach (var vUser in currentChannel.Users)
+            {
+                await vUser.ModifyAsync(properties => { properties.Channel = newChannel; });
+            }
+        }
     }
 }
