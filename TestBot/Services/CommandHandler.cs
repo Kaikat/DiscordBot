@@ -1,10 +1,9 @@
 ﻿using System;
-using Discord;
+using System.Threading.Tasks;
 using Discord.Commands;
 using Discord.WebSocket;
-using System.Threading.Tasks;
 
-namespace TestBot.Services
+namespace RavenBot.Services
 {
     public class CommandHandler
     {
@@ -13,7 +12,7 @@ namespace TestBot.Services
         private readonly IServiceProvider _provider;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:TestBot.Services.CommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="T:RavenBot.Services.CommandHandler"/> class.
         /// </summary>
         /// <param name="client">Client.</param>
         /// <param name="commands">Commands.</param>

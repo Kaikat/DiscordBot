@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TestBot.Modules
+namespace RavenBot.Modules
 {
     public class DiscordTable
     {

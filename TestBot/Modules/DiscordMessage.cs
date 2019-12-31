@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace TestBot.Modules
+namespace RavenBot.Modules
 {
     public static class DiscordMessage
     {

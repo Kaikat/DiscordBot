@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
+using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using System.Diagnostics;
-using System.Reflection;
-using System.Threading.Tasks;
 
-namespace TestBot.Services
+namespace RavenBot.Services
 {
     public class StartupService
     {
