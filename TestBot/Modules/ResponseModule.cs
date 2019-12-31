@@ -1,11 +1,10 @@
-﻿using Discord.Commands;
-using Discord.Net;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
-using System.IO;
-using System.Collections.Generic;
+using Discord.Commands;
+using Discord.WebSocket;
 
-namespace TestBot.Modules
+namespace RavenBot.Modules
 {
     public class ResponseModule : ModuleBase<SocketCommandContext>
     {

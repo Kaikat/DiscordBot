@@ -1,9 +1,8 @@
-﻿using Discord;
-using Discord.Commands;
-using System.Threading.Tasks;
+﻿using Discord.Commands;
+
 //using TestBot.Services;
 
-namespace TestBot.Modules
+namespace RavenBot.Modules
 {
     public class AudioModule : ModuleBase<ICommandContext>
     {

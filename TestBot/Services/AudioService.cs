@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Audio;
 
-namespace TestBot.Services
+namespace RavenBot.Services
 {
     public class AudioService
     {

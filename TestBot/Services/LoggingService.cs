@@ -1,12 +1,11 @@
-﻿using Discord;
-using Discord.Commands;
-using Discord.WebSocket;
-using System;
+﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using Discord;
+using Discord.Commands;
+using Discord.WebSocket;
 
-
-namespace TestBot.Services
+namespace RavenBot.Services
 {
     public class LoggingService
     {

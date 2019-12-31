@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Net;
 using System.Collections.Generic;
+using System.Net;
 using Newtonsoft.Json;
 
-
-namespace TestBot.Modules
+namespace RavenBot.Modules
 {
     //https://secure.runescape.com/m=hiscore_oldschool/hiscorepersonal?user1=arrow
     public class SkillData
