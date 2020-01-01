@@ -8,9 +8,12 @@ namespace RavenBot.Modules
         private readonly int DISCORD_MAX_CHAR_LIMIT = 2000;
 
         public string Table { get; private set; }
+        private readonly int[] columnWidths;
 
         public DiscordTable(string[] tableColumns, int[] columnCharWidths, int rows, List<List<string>> contents)
         {
+            columnWidths = columnCharWidths;
+
             if (tableColumns.Length != columnCharWidths.Length)
             {
                 Console.WriteLine("ERROR: DiscordTable: The lengths of the lists must be the same.");
@@ -41,6 +44,20 @@ namespace RavenBot.Modules
             }
             header += "\n" + border + "\n";
             Table = header + table + border + "\n";
+        }
+
+        public void AddTotalsRow(string[] contents)
+        {
+            string border = new string('-', 1 + columnWidths.Length + Sum(columnWidths));
+
+            Table += "|";
+            for (int column = 0; column < columnWidths.Length; column++)
+            {
+                int whiteSpace = columnWidths[column] - (contents[column].Length + 1);
+                string space = new string(' ', whiteSpace);
+                Table += column == 0 ? " " + contents[column] + space + "|" : space + contents[column] + " |";
+            }
+            Table += "\n" + border + "\n";
         }
 
         private int Sum(int[] array)

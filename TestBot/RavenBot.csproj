@@ -16,4 +16,8 @@
     <Folder Include="Properties\" />
     <Folder Include="Data\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Modules\EmptyEnumeration.cs" />
+    <Compile Remove="BossCollection.cs" />
+  </ItemGroup>
 </Project>

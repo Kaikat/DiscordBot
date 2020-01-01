@@ -74,7 +74,22 @@ namespace RavenBot.Modules
         [Command("ehb")]
         public async Task PlayerInfo(string playername)
         {
-            RunescapeHS player = new RunescapeHS(playername);
+            Player player = new Player(playername);
+            if(player.Valid)
+            {
+                await ReplyAsync($"Hello {playername}\nEHB In Progress\n");
+
+                foreach (string tablePart in player.GetBossDataTableParts())
+                {
+                    await ReplyAsync(tablePart);
+                }
+            }
+            else
+            {
+                await ReplyAsync($"Could not find a player with the name '{playername}'\n");
+            }
+
+            /*RunescapeHS player = new RunescapeHS(playername);
             if (player.GetBossDataTable().Count == 0)
             {
                 await ReplyAsync($"Could not find a player with the name '{playername}'\n");
@@ -84,7 +99,7 @@ namespace RavenBot.Modules
                 List<string> tableParts = player.GetBossDataTable();
                 await ReplyAsync($"Hello {playername}\nEHB In Progress\n");
 
-                /*
+
                 var builder = new EmbedBuilder();
 
                 builder.WithTitle("Ice Wizard Stats");
@@ -97,13 +112,13 @@ namespace RavenBot.Modules
                 builder.WithThumbnailUrl("url");
 
                 //builder.WithColor(Color.Red);
-                await ReplyAsync("", false, builder.Build());*/
+                await ReplyAsync("", false, builder.Build());
 
                 for(int i = 0; i < tableParts.Count; i++)
                 {
                     await ReplyAsync(tableParts[i]);
                 }
-            }
+            }*/
         }
 
 
