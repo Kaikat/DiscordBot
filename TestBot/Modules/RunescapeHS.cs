@@ -83,12 +83,6 @@ namespace RavenBot.Modules
             return bossData;
         }
 
-        /*public List<string> GetBossTable()
-        {
-            List<string> table = new List<string>();
-            return table;
-        }*/
-
         public List<string> GetBossDataTable()
         {
             Dictionary<string, BossData> bossData = GetBossData();

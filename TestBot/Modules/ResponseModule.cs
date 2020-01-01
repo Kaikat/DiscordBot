@@ -74,6 +74,12 @@ namespace RavenBot.Modules
         [Command("ehb")]
         public async Task PlayerInfo(string playername)
         {
+            /*
+             * await ReplyAsync("Make sure you are in a voice channel first!").ContinueWith(task =>
+                    {
+                        ReplyAsync("second message when previous task is done");
+                    });           
+             */
             Player player = new Player(playername);
             if(player.Valid)
             {
@@ -88,37 +94,6 @@ namespace RavenBot.Modules
             {
                 await ReplyAsync($"Could not find a player with the name '{playername}'\n");
             }
-
-            /*RunescapeHS player = new RunescapeHS(playername);
-            if (player.GetBossDataTable().Count == 0)
-            {
-                await ReplyAsync($"Could not find a player with the name '{playername}'\n");
-            }
-            else
-            {
-                List<string> tableParts = player.GetBossDataTable();
-                await ReplyAsync($"Hello {playername}\nEHB In Progress\n");
-
-
-                var builder = new EmbedBuilder();
-
-                builder.WithTitle("Ice Wizard Stats");
-                builder.AddInlineField("Cost", "3");
-                builder.AddInlineField("HP", "665");
-                builder.AddInlineField("DPS", "42");
-                builder.AddInlineField("Hit Speed", "1.5sec");
-                builder.AddInlineField("SlowDown", "35%");
-                builder.AddInlineField("AOE", "63");
-                builder.WithThumbnailUrl("url");
-
-                //builder.WithColor(Color.Red);
-                await ReplyAsync("", false, builder.Build());
-
-                for(int i = 0; i < tableParts.Count; i++)
-                {
-                    await ReplyAsync(tableParts[i]);
-                }
-            }*/
         }
 
 

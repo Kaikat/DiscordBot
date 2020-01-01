@@ -67,11 +67,6 @@ namespace RavenBot.Modules
                 });
             }
 
-            /*tableContents.Add(new List<string>
-            {
-                "TOTALS", totals[0].ToString(), "", totals[1].ToString("n2")
-            });*/
-
             string[] columnNames = { "Boss", "Kills", "KPH", "EHB" };
             int[] columnWidths = { 28, 9, 5, 9 };
 
